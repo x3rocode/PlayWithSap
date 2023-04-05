@@ -1,4 +1,4 @@
-package com.example.playwithsap.ui.theme
+package com.example.playwithsap.Screen.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
