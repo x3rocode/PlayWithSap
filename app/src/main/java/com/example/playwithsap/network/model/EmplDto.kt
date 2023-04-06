@@ -3,7 +3,7 @@ package com.example.playwithsap.network.model
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-data class EmplDto(
+data class Empl(
     @SerializedName("MANDT")
     val mandt: String,
 
@@ -14,7 +14,7 @@ data class EmplDto(
     val uuid: String,
 
     @SerializedName("REGDAT")
-    val regdate: Date,
+    val regdate: String,
 
     @SerializedName("ZNAME")
     val name : String,

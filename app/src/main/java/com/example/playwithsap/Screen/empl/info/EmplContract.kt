@@ -1,7 +1,7 @@
 package com.example.playwithsap.Screen.empl.info
 
-import com.example.playwithsap.domain.model.Empl
 import com.example.playwithsap.domain.model.User
+import com.example.playwithsap.network.model.Empl
 
 class EmplContract {
     data class State(

@@ -1,8 +1,8 @@
 package com.example.playwithsap.domain.model
 
-import java.util.Date
+import java.util.*
 
-data class Empl(
+data class Empl1(
     val mandt: String,
     val sabun: Int,
     val uuid: String,
