@@ -16,19 +16,19 @@ fun LoginScreen(
     loginViewModel: LoginViewModel = hiltViewModel()
 ){
     val loginResult by loginViewModel.loginState.collectAsState()
-    val userTextState by remember {
+    val userTextState = remember {
         mutableStateOf("")
     }
-    val passwordTextState by remember {
+    val passwordTextState = remember {
         mutableStateOf("")
     }
     val context = LocalContext.current
     Column() {
-        TextField(value = userTextState, onValueChange = { userTextState })
-        TextField(value = passwordTextState, onValueChange = { passwordTextState })
+        TextField(value = userTextState.value, onValueChange = { userTextState.value = it })
+        TextField(value = passwordTextState.value, onValueChange = { passwordTextState.value = it })
         Button(modifier = Modifier,
             onClick = {
-            loginViewModel.login(userTextState, passwordTextState, context)
+            loginViewModel.login(userTextState.value, passwordTextState.value, context)
         }){
             Text("login")
         }

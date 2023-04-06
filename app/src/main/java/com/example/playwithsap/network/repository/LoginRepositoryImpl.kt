@@ -5,10 +5,9 @@ import com.example.playwithsap.domain.repository.LoginRepository
 import com.example.playwithsap.domain.util.MyResult
 import com.example.playwithsap.network.RetrofitApi
 import com.example.playwithsap.network.model.mapper.LoginDtoMapper
-import javax.inject.Inject
 
 
-class LoginRepositoryImpl @Inject constructor(
+class LoginRepositoryImpl constructor(
     private val api: RetrofitApi,
     private val mapper: LoginDtoMapper = LoginDtoMapper()
 ) : LoginRepository{

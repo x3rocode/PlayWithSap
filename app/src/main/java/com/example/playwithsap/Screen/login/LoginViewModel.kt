@@ -7,12 +7,15 @@ import androidx.lifecycle.viewModelScope
 import com.example.playwithsap.domain.model.Login
 import com.example.playwithsap.domain.repository.LoginRepository
 import com.example.playwithsap.domain.util.MyResult
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel constructor(
+@HiltViewModel
+class LoginViewModel @Inject constructor(
     private val loginRepository: LoginRepository
 ) : ViewModel(){
 
