@@ -9,6 +9,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+
 @Module
 @InstallIn(SingletonComponent ::class)
 object AppModule {
@@ -17,4 +18,5 @@ object AppModule {
     fun provideApplication(@ApplicationContext app: Context): SapApplication{
         return app as SapApplication
     }
+
 }

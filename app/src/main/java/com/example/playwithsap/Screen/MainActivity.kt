@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.playwithsap.Screen.empl.info.EmplInfoScreen
+import com.example.playwithsap.Screen.login.LoginScreen
 import com.example.playwithsap.Screen.ui.theme.PlayWithSapTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,7 +27,7 @@ class MainActivity : ComponentActivity() {
             PlayWithSapTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    EmplInfoScreen()
+                    LoginScreen()
                 }
             }
         }

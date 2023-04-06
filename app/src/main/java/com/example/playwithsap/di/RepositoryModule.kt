@@ -2,8 +2,8 @@ package com.example.playwithsap.di
 
 
 import com.example.playwithsap.domain.repository.EmplRepository
-import com.example.playwithsap.domain.repository.EmplRepositoryImpl
 import com.example.playwithsap.network.RetrofitApi
+import com.example.playwithsap.network.repository.EmplRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

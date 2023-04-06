@@ -3,7 +3,7 @@ package com.example.playwithsap.network.model
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-data class Empl(
+data class EmplDto(
     @SerializedName("MANDT")
     val mandt: String,
 
