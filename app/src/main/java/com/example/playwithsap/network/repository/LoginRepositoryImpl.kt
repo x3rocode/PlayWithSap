@@ -1,5 +1,6 @@
 package com.example.playwithsap.network.repository
 
+import com.example.playwithsap.domain.datastore.StoreSavedToken
 import com.example.playwithsap.domain.model.Login
 import com.example.playwithsap.domain.repository.LoginRepository
 import com.example.playwithsap.domain.util.MyResult
@@ -9,11 +10,12 @@ import com.example.playwithsap.network.model.mapper.LoginDtoMapper
 
 class LoginRepositoryImpl constructor(
     private val api: RetrofitApi,
-    private val mapper: LoginDtoMapper = LoginDtoMapper()
+    private val mapper: LoginDtoMapper = LoginDtoMapper(),
+    private val sharedPref: StoreSavedToken = StoreSavedToken
 ) : LoginRepository{
-    override suspend fun login(authToken: String): MyResult<Login> {
+    override suspend fun login(): MyResult<Login> {
 
-        val response = api.login(auth = authToken)
+        val response = api.login(auth = sharedPref.getAuthToken())
         if (response.isSuccessful) {
             response.body()?.let {
 

@@ -11,7 +11,7 @@ interface RetrofitApi {
     @GET("myrest/heylin")
     suspend fun getEmpl(
         @Header("Content-type") accept: String = "application/json",
-        @Header("Authorization") auth: String = "Basic emMwMDI2OmFrZGNsOTgxMjE1IQ==",
+        @Header("Authorization") auth: String ,
         @Header("sap-client") client: Int = 400
     ): Response<List<EmplDto>>
 
