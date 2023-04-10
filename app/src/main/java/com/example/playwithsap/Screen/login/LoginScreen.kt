@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -15,10 +16,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.playwithsap.Screen.empl.info.EmplInfoScreen
 import com.example.playwithsap.domain.datastore.StoreSavedToken
 import com.example.playwithsap.domain.util.MyResult
+import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun LoginScreen(
-    loginViewModel: LoginViewModel = hiltViewModel()
+    loginViewModel: LoginViewModel = hiltViewModel(),
+    onNavigateToEmplScreen: () -> Unit,
+    scope: CoroutineScope,
+    scaffoldState: ScaffoldState
 ){
     val sharedPref = StoreSavedToken
     val loginResult by loginViewModel.loginState.collectAsState()
