@@ -15,13 +15,18 @@ class EmplRepositoryImpl constructor(
 ): EmplRepository {
 
     override suspend fun get(): MyResult<List<Empl>> {
-        val response = api.getEmpl(auth = sharedPref.getAuthToken())
-        if(response.isSuccessful){
-            response.body()?.let {
-                return MyResult.Success(mapper.toDomainList(it))
-            }
-        }
 
-        return MyResult.Error(response.message())
+        try {
+            val response = api.getEmpl(auth = sharedPref.getAuthToken())
+            if(response.isSuccessful){
+                response.body()?.let {
+                    return MyResult.Success(mapper.toDomainList(it))
+                }
+            }
+            return MyResult.Error(response.message())
+
+        }catch (e: Exception){
+            return MyResult.Error(e.message!!)
+        }
     }
 }

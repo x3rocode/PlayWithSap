@@ -7,6 +7,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navOptions
 import com.example.playwithsap.Screen.empl.EmplInfoViewModel
 import com.example.playwithsap.Screen.empl.info.EmplInfoScreen
 import com.example.playwithsap.Screen.login.LoginScreen
@@ -26,17 +27,29 @@ fun Navigation(
             LoginScreen(
                 loginViewModel= loginViewModel,
                 onNavigateToEmplScreen = {
-                     navController.navigate("empl")
+                     navController.navigate("empl"){
+                         navOptions {
+                             anim {
+                                 enter = popEnter
+                             }
+                         }
+                     }
                 },
                 scope = scope,
-                scaffoldState = scaffoldState
+                scaffoldState = scaffoldState,
             )
         }
         composable("empl"){
             EmplInfoScreen(
                 emplViewModel = emplViewModel,
                 onNavigateToEmplScreen = {
-                    navController.navigate("login")
+                    navController.navigate("login"){
+                        navOptions {
+                            anim {
+
+                            }
+                        }
+                    }
                 },
                 scope = scope,
                 scaffoldState = scaffoldState

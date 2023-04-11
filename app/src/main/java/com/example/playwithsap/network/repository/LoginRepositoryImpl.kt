@@ -15,15 +15,18 @@ class LoginRepositoryImpl constructor(
 ) : LoginRepository{
     override suspend fun login(): MyResult<Login> {
 
-        val response = api.login(auth = sharedPref.getAuthToken())
-        if (response.isSuccessful) {
-            response.body()?.let {
+        try {
+            val response = api.login(auth = sharedPref.getAuthToken())
+            if (response.isSuccessful) {
+                response.body()?.let {
 
-                return MyResult.Success(mapper.mapToDomainModel(it))
+                    return MyResult.Success(mapper.mapToDomainModel(it))
+                }
             }
+            return MyResult.Error(response.message())
+        } catch (e: Exception){
+            return MyResult.Error(e.message!!)
         }
-        return MyResult.Error(response.message())
+
     }
-
-
 }

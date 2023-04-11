@@ -10,6 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+
 @Module
 @InstallIn(SingletonComponent ::class)
 object NetworkModule {
@@ -17,9 +18,14 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideRetrofitApi(): RetrofitApi {
+
+        val gson = GsonBuilder()
+            .setLenient()
+            .create()
+
         return Retrofit.Builder()
             .baseUrl("http://dlvs4h01.poscointl.com:50000/")
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(RetrofitApi::class.java)
     }

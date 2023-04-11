@@ -9,4 +9,5 @@ sealed class MyResult<T>(
     class Success<T>(data: T) : MyResult<T>(data)
     class Loading<T>(data: T? = null) : MyResult<T>(data)
     class Error<T>(message: String, data: T? = null) : MyResult<T>(data, message)
+    class Idel<T>() : MyResult<T>()
 }
