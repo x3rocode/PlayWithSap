@@ -16,11 +16,11 @@ class LoginViewModel @Inject constructor(
     private val loginRepository: LoginRepository
 ) : ViewModel(){
 
-    private val _loginState = MutableStateFlow<MyResult<Login>>(MyResult.Loading())
+    private val _loginState = MutableStateFlow<MyResult<Login>>(MyResult.Error(message = "yet"))
     val loginState: StateFlow<MyResult<Login>> = _loginState
     fun login() {
         viewModelScope.launch {
-
+            _loginState.value = MyResult.Loading()
             _loginState.value = loginRepository.login()
         }
     }

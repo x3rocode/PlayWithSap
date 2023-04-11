@@ -22,13 +22,6 @@ class EmplInfoViewModel  @Inject constructor(
     private val _emplsState = MutableStateFlow<MyResult<List<Empl>>>(MyResult.Loading())
     val emplState: StateFlow<MyResult<List<Empl>>> = _emplsState
 
-
-    init {
-        viewModelScope.launch {
-            getEmpl()
-        }
-    }
-
     fun getEmpl(){
         viewModelScope.launch {
             _emplsState.value = repository.get()
