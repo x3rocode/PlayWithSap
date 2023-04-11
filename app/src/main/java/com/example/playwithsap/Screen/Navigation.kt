@@ -1,5 +1,6 @@
 package com.example.playwithsap.Screen
 
+import SplashScreen
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -13,6 +14,7 @@ import com.example.playwithsap.Screen.empl.info.EmplInfoScreen
 import com.example.playwithsap.Screen.login.LoginScreen
 import com.example.playwithsap.Screen.login.LoginViewModel
 
+
 @Composable
 fun Navigation(
     loginViewModel: LoginViewModel = hiltViewModel(),
@@ -22,7 +24,7 @@ fun Navigation(
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
-    NavHost(navController = navController, startDestination = "login"){
+    NavHost(navController = navController, startDestination = "splash"){
         composable("login"){
             LoginScreen(
                 loginViewModel= loginViewModel,
@@ -54,6 +56,9 @@ fun Navigation(
                 scope = scope,
                 scaffoldState = scaffoldState
             )
+        }
+        composable("splash"){
+            SplashScreen()
         }
 
     }
