@@ -1,6 +1,7 @@
 package com.example.playwithsap.Screen
 
 import SplashScreen
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -15,6 +16,7 @@ import com.example.playwithsap.Screen.login.LoginScreen
 import com.example.playwithsap.Screen.login.LoginViewModel
 
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun Navigation(
     loginViewModel: LoginViewModel = hiltViewModel(),
