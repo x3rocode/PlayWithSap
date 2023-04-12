@@ -1,6 +1,5 @@
 
 import androidx.compose.animation.*
-import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -77,23 +76,23 @@ fun SplashScreen(mainViewModel: SplashViewModel = viewModel()) {
 
 @ExperimentalAnimationApi
 fun addAnimation(duration: Int = 500): ContentTransform {
-    return slideInVertically(animationSpec = tween(durationMillis = duration, easing = LinearEasing)) { height -> height }  with
-            slideOutVertically(animationSpec = tween(durationMillis = duration, easing = LinearEasing)) { height -> -height }
+    return slideInVertically(animationSpec = tween(durationMillis = duration)) { height -> height }  with
+            slideOutVertically(animationSpec = tween(durationMillis = duration )) { height -> -height }
 
 }
 
 class SplashViewModel : ViewModel() {
-    var groupList = mutableListOf("홀딩스", "케미칼", "DX", "이앤씨", "엠텍", "플로우", "A&C", "퓨처엠", "스틸리온", "인터내셔널")
 
-    private val baseDelay = 130L // 기본 지연 시간
-    private val delayFactor = 0.5f // 지연 시간 증가율
+    private val baseDelay = 250L // 기본 지연 시간
+    private val delayFactor = 0.3f // 지연 시간 증가율
     private var index = 1
     var delayMillis = 0f
-    val seconds =  groupList
+    val seconds =  mutableListOf("홀딩스", "케미칼", "DX", "이앤씨", "엠텍", "플로우", "A&C", "퓨처엠", "스틸리온", "인터내셔널")
         .asSequence()
         .asFlow()
         .onEach {
-            delayMillis = baseDelay + (index * baseDelay * delayFactor)  //이렇게 계산하지 말고 뭔가 보간을 주고싶다
+            delayMillis = if(index > 8) baseDelay + (index * 0.3f * baseDelay * delayFactor) else
+                baseDelay + ((index * 0.1f) * baseDelay * delayFactor)  //이렇게 계산하지 말고 뭔가 보간을 주고싶다
             index += 1
             delay(delayMillis.toLong())
         }
