@@ -1,4 +1,7 @@
 
+import android.annotation.SuppressLint
+import android.util.Log
+import android.view.animation.LinearInterpolator
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -6,8 +9,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,14 +23,32 @@ import com.example.playwithsap.R
 import com.example.playwithsap.Screen.ui.theme.PoscoBlue
 import com.example.playwithsap.Screen.ui.theme.Typography
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 
 
+enum class Companies{
+
+}
+
+@SuppressLint("StateFlowValueCalledInComposition")
 @ExperimentalAnimationApi
 @Composable
 fun SplashScreen(mainViewModel: SplashViewModel = viewModel()) {
-    val seconds by mainViewModel.seconds.collectAsState("")
+    val companies = mainViewModel.getCompanies()
+    val company = MutableStateFlow("")
+    var linearInterpolator = LinearInterpolator()
+    
+    LaunchedEffect(Unit){
+        companies.withIndex().onEach {
+            val fraction = it.index / 4f
+            val duration = 1000L
+            delay((linearInterpolator.getInterpolation(fraction) * duration).toLong())
+        }.collect{
+            company.value = it.value
+            Log.d("gggggggggggg", it.value)
+        }
+    }
+
 
     Column(
         modifier = Modifier
@@ -53,13 +74,13 @@ fun SplashScreen(mainViewModel: SplashViewModel = viewModel()) {
                     style = Typography.h3
                 )
                 AnimatedContent(
-                    targetState = seconds,
+                    targetState = company.collectAsState(),
                     transitionSpec = {
                         addAnimation()
                     }
                 ) { targetCount ->
                     Text(
-                        text = "$targetCount",
+                        text = "${targetCount.value}",
                         style = Typography.h3,
                         modifier = Modifier
                             .animateContentSize()
@@ -67,6 +88,7 @@ fun SplashScreen(mainViewModel: SplashViewModel = viewModel()) {
                     )
 
                 }
+
 
             }
         }
@@ -80,7 +102,6 @@ fun addAnimation(duration: Int = 500): ContentTransform {
             slideOutVertically(animationSpec = tween(durationMillis = duration )) { height -> -height }
 
 }
-
 class SplashViewModel : ViewModel() {
 
     private val baseDelay = 250L // 기본 지연 시간
@@ -88,13 +109,20 @@ class SplashViewModel : ViewModel() {
     private var index = 1
     var delayMillis = 0f
     val seconds =  mutableListOf("홀딩스", "케미칼", "DX", "이앤씨", "엠텍", "플로우", "A&C", "퓨처엠", "스틸리온", "인터내셔널")
-        .asSequence()
-        .asFlow()
-        .onEach {
-            delayMillis = if(index > 8) baseDelay + (index * 0.3f * baseDelay * delayFactor) else
-                baseDelay + ((index * 0.1f) * baseDelay * delayFactor)  //이렇게 계산하지 말고 뭔가 보간을 주고싶다
-            index += 1
-            delay(delayMillis.toLong())
+
+    fun getCompanies(): Flow<String> = flow{
+        seconds.forEach{
+            emit(it)
         }
+    }
+
+//        .asSequence()
+//        .asFlow()
+//        .onEach {
+//            delayMillis = if(index > 8) baseDelay + (index * 0.3f * baseDelay * delayFactor) else
+//                baseDelay + ((index * 0.1f) * baseDelay * delayFactor)  //이렇게 계산하지 말고 뭔가 보간을 주고싶다
+//            index += 1
+//            delay(delayMillis.toLong())
+//        }
 }
 
