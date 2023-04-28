@@ -1,9 +1,10 @@
 
 import android.annotation.SuppressLint
 import android.util.Log
-import android.view.animation.LinearInterpolator
 import androidx.compose.animation.*
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.CubicBezierEasing
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -21,39 +22,39 @@ import com.example.playwithsap.R
 import com.example.playwithsap.Screen.ui.theme.PoscoBlue
 import com.example.playwithsap.Screen.ui.theme.Typography
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
 
 
 enum class Companies{
 
 }
 
-@SuppressLint("StateFlowValueCalledInComposition")
+@SuppressLint("StateFlowValueCalledInComposition", "FlowOperatorInvokedInComposition")
 @ExperimentalAnimationApi
 @Composable
 fun SplashScreen(mainViewModel: SplashViewModel = viewModel()) {
-    var linearInterpolator = LinearInterpolator()
-    val animatedFloat = remember { Animatable(0f) }
-    val comp = mainViewModel.companies
-    val companies =  flow {
-        mainViewModel.companies.forEachIndexed { index, indexedValue ->
-            var fraction = (index / mainViewModel.companies.size.toFloat())
-            var duration = 1000L
-            val delaymillies = (linearInterpolator.getInterpolation(fraction) * duration).toLong()
-            emit(indexedValue)
-            delay(2500L + delaymillies)
-            Log.d("dddddddddd", "애밋 ${index}, ${mainViewModel.companies.size}  ${fraction}, ${linearInterpolator.getInterpolation(fraction)}, ${index / mainViewModel.companies.size}")
+
+    var companies =  mainViewModel.companies
+    var currentIndex by remember { mutableStateOf(0) }
+    var delaymillies = 0L
+    var myEasing = CubicBezierEasing(0.270f, 0.945f, 0.610f, 1.005f)
+    var duration = 1000L
+
+    LaunchedEffect(key1 = currentIndex) {
+        var fraction = (currentIndex / companies.size.toFloat())
+
+        if(currentIndex <= companies.size - 3){
+            delaymillies = (LinearEasing.transform(fraction) * duration).toLong()
+            delay(delaymillies)
+        }else{
+            delaymillies = (myEasing.transform(fraction) * duration).toLong()
+            delay(delaymillies)
         }
 
+        Log.d("ddddddddd",delaymillies.toString())
+        if(currentIndex < companies.size - 1 ){
+            currentIndex += 1
+        }
     }
-    val company by companies.collectAsState(initial = "")
-    LaunchedEffect(animatedFloat) {
-        animatedFloat.animateTo(
-            targetValue = 8000f,
-            animationSpec = tween(delayMillis = 1000, durationMillis = 5000, easing = LinearEasing)
-        )
-    }
-
 
     Column(
         modifier = Modifier
@@ -79,15 +80,19 @@ fun SplashScreen(mainViewModel: SplashViewModel = viewModel()) {
                     style = Typography.h3
                 )
                 AnimatedContent(
-                    targetState = company,
+                    targetState = currentIndex,
                     transitionSpec = {
-                        slideInVertically(animationSpec = tween(durationMillis = 1000)) { height -> height }  with
-                                slideOutVertically(animationSpec = tween(durationMillis = 1000 )) { height -> -height }
-
+                        if(currentIndex >= companies.size -1 ){
+                            slideInVertically(animationSpec = tween(durationMillis = 1100), ) { height -> height } with
+                                    slideOutVertically(animationSpec = tween(durationMillis =  1100)) { height -> -height }
+                        } else {
+                            slideInVertically(animationSpec = tween(durationMillis = 500, delayMillis = delaymillies.toInt())) { height -> height }  with
+                                    slideOutVertically(animationSpec = tween(durationMillis =  500, delayMillis = delaymillies.toInt())) { height -> -height }
+                        }
                     }
-                ) { targetCount ->
+                ) { currentIndex ->
                     Text(
-                        text = "${targetCount}",
+                        text = "${companies[currentIndex]}",
                         style = Typography.h3,
                         modifier = Modifier
                             .animateContentSize()
@@ -103,33 +108,13 @@ fun SplashScreen(mainViewModel: SplashViewModel = viewModel()) {
 }
 
 @ExperimentalAnimationApi
-fun addAnimation(duration: Int = 500): ContentTransform {
-    return slideInVertically(animationSpec = tween(durationMillis = duration)) { height -> height }  with
-            slideOutVertically(animationSpec = tween(durationMillis = duration )) { height -> -height }
+fun addAnimation(delay: Int ): ContentTransform {
+    return slideInVertically(animationSpec = tween(durationMillis = delay)) { height -> height }  with
+            slideOutVertically(animationSpec = tween(durationMillis = delay )) { height -> -height }
+
 
 }
 class SplashViewModel : ViewModel() {
-
-    private val baseDelay = 250L // 기본 지연 시간
-    private val delayFactor = 0.3f // 지연 시간 증가율
-    private var index = 1
-    var delayMillis = 0f
     val companies =
-        mutableListOf("홀딩스", "케미칼", "DX", "이앤씨", "엠텍", "플로우", "A&C", "퓨처엠", "스틸리온", "인터내셔널")
-
-    fun getCompanies(): Flow<String> = flow {
-        companies.forEach {
-            emit(it)
-        }
-    }
+        mutableListOf("홀딩스", "케미칼", "DX", "이앤씨", "휴먼스", "엠텍", "플로우", "A&C", "퓨처엠", "스틸리온", "DX", "인터내셔널")
 }
-//        .asSequence()
-//        .asFlow()
-//        .onEach {
-//            delayMillis = if(index > 8) baseDelay + (index * 0.3f * baseDelay * delayFactor) else
-//                baseDelay + ((index * 0.1f) * baseDelay * delayFactor)  //이렇게 계산하지 말고 뭔가 보간을 주고싶다
-//            index += 1
-//            delay(delayMillis.toLong())
-//        }
-//}
-
