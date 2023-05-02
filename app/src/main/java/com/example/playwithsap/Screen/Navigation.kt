@@ -14,11 +14,13 @@ import com.example.playwithsap.Screen.empl.EmplInfoViewModel
 import com.example.playwithsap.Screen.empl.info.EmplInfoScreen
 import com.example.playwithsap.Screen.login.LoginScreen
 import com.example.playwithsap.Screen.login.LoginViewModel
+import com.example.playwithsap.Screen.splash.SplashViewModel
 
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun Navigation(
+    splashViewModel: SplashViewModel = hiltViewModel(),
     loginViewModel: LoginViewModel = hiltViewModel(),
     emplViewModel: EmplInfoViewModel = hiltViewModel()
 ){
@@ -27,6 +29,14 @@ fun Navigation(
     val scope = rememberCoroutineScope()
 
     NavHost(navController = navController, startDestination = "splash"){
+        composable("splash"){
+            SplashScreen(
+                splashViewModel = splashViewModel,
+                onNavigateToLoginScreen = {
+                    navController.navigate("login")
+                }
+            )
+        }
         composable("login"){
             LoginScreen(
                 loginViewModel= loginViewModel,
@@ -59,9 +69,7 @@ fun Navigation(
                 scaffoldState = scaffoldState
             )
         }
-        composable("splash"){
-            SplashScreen()
-        }
+
 
     }
 }

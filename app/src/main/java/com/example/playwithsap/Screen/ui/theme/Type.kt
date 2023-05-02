@@ -31,6 +31,12 @@ val Typography = Typography(
                 fontWeight = FontWeight.Medium,
                 fontSize = 30.sp,
                 color = Color.White
+        ),
+        h5 = TextStyle(
+                fontFamily = yoonkr,
+                fontWeight = FontWeight.Medium,
+                fontSize = 15.sp,
+                color = Color.White
         )
         /* Other default text styles to override
     button = TextStyle(
