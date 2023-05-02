@@ -1,6 +1,5 @@
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.LinearEasing
@@ -16,17 +15,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.playwithsap.R
+import com.example.playwithsap.Screen.splash.SplashViewModel
 import com.example.playwithsap.Screen.ui.theme.PoscoBlue
 import com.example.playwithsap.Screen.ui.theme.Typography
 import kotlinx.coroutines.delay
 
 
-enum class Companies{
-
-}
 
 @SuppressLint("StateFlowValueCalledInComposition", "FlowOperatorInvokedInComposition")
 @ExperimentalAnimationApi
@@ -37,7 +33,9 @@ fun SplashScreen(mainViewModel: SplashViewModel = viewModel()) {
     var currentIndex by remember { mutableStateOf(0) }
     var delaymillies = 0L
     var myEasing = CubicBezierEasing(0.270f, 0.945f, 0.610f, 1.005f)
-    var duration = 1000L
+    var duration = 800L
+
+
 
     LaunchedEffect(key1 = currentIndex) {
         var fraction = (currentIndex / companies.size.toFloat())
@@ -49,8 +47,6 @@ fun SplashScreen(mainViewModel: SplashViewModel = viewModel()) {
             delaymillies = (myEasing.transform(fraction) * duration).toLong()
             delay(delaymillies)
         }
-
-        Log.d("ddddddddd",delaymillies.toString())
         if(currentIndex < companies.size - 1 ){
             currentIndex += 1
         }
@@ -83,11 +79,9 @@ fun SplashScreen(mainViewModel: SplashViewModel = viewModel()) {
                     targetState = currentIndex,
                     transitionSpec = {
                         if(currentIndex >= companies.size -1 ){
-                            slideInVertically(animationSpec = tween(durationMillis = 1100), ) { height -> height } with
-                                    slideOutVertically(animationSpec = tween(durationMillis =  1100)) { height -> -height }
+                            addAnimation(800)
                         } else {
-                            slideInVertically(animationSpec = tween(durationMillis = 500, delayMillis = delaymillies.toInt())) { height -> height }  with
-                                    slideOutVertically(animationSpec = tween(durationMillis =  500, delayMillis = delaymillies.toInt())) { height -> -height }
+                            addAnimation(duration.toInt() / 2)
                         }
                     }
                 ) { currentIndex ->
@@ -114,7 +108,4 @@ fun addAnimation(delay: Int ): ContentTransform {
 
 
 }
-class SplashViewModel : ViewModel() {
-    val companies =
-        mutableListOf("홀딩스", "케미칼", "DX", "이앤씨", "휴먼스", "엠텍", "플로우", "A&C", "퓨처엠", "스틸리온", "DX", "인터내셔널")
-}
+
