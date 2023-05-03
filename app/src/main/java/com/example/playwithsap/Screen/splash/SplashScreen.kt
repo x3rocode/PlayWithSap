@@ -5,20 +5,25 @@ import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.playwithsap.R
 import com.example.playwithsap.Screen.splash.SplashViewModel
+import com.example.playwithsap.Screen.ui.theme.PoscoOG
 import com.example.playwithsap.Screen.ui.theme.Typography
 import kotlinx.coroutines.delay
 
@@ -38,7 +43,7 @@ fun SplashScreen(
     var myEasing = CubicBezierEasing(0.270f, 0.945f, 0.610f, 1.005f)
     var duration = 800L
     var position by remember { mutableStateOf(Offset.Zero) }
-    var targetPosition = Offset(0f, -500f)
+    var targetPosition = Offset(0f, -700f)
 
     LaunchedEffect(key1 = currentIndex, key2 = position) {
         var fraction = (currentIndex / companies.size.toFloat())
@@ -58,12 +63,14 @@ fun SplashScreen(
         }
     }
 
+    Background(position = position)
     Column(
         modifier = Modifier
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -115,6 +122,42 @@ fun SplashScreen(
         }
 
     }
+}
+
+@Composable
+fun Background(position : Offset){
+    Canvas(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.White)
+            .graphicsLayer(
+                translationY = animateFloatAsState(
+                    targetValue = position.y * 2f,
+                    animationSpec = tween(1000, delayMillis = 1000)
+                ).value
+            )
+    ){
+        val canvasWidth = size.width
+        val canvasHeight = size.height
+        drawRect(
+            color = PoscoOG,
+            topLeft = Offset(0f, 0f),
+            size = Size(canvasWidth, canvasHeight)
+        )
+    }
+}
+
+@Preview
+@Composable
+fun prev(){
+    var position by remember { mutableStateOf(Offset.Zero) }
+    var targetPosition = Offset(0f, -700f)
+
+    LaunchedEffect(key1 = position) {
+        position = targetPosition
+    }
+
+    Background(position = position)
 }
 
 @ExperimentalAnimationApi

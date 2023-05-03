@@ -1,6 +1,7 @@
 package com.example.playwithsap.Screen.login
 
 
+import Background
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,6 +15,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
@@ -29,7 +31,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.playwithsap.R
-import com.example.playwithsap.Screen.ui.theme.PoscoBlue
 import com.example.playwithsap.Screen.ui.theme.PoscoOG
 import com.example.playwithsap.Screen.ui.theme.Typography
 import com.example.playwithsap.domain.datastore.StoreSavedToken
@@ -52,8 +53,9 @@ fun LoginScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = PoscoBlue),
+            .background(color = Color.White),
     ) {
+        Background(Offset(0f, -700f))
         Logo()
         Login(
             loginResult = loginResult,
@@ -63,6 +65,7 @@ fun LoginScreen(
         )
     }
 }
+
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -133,7 +136,7 @@ fun Logo(){
                 .fillMaxWidth()
                 .padding(start = 100.dp)
                 .graphicsLayer {
-                    translationY = -500f
+                    translationY = -700f
                 }
         ) {
             Image(
@@ -194,6 +197,7 @@ fun UserInputName(
 
 ){
     OutlinedTextField(
+        modifier = Modifier.padding(bottom = 10.dp),
         value = userTextState.value,
         onValueChange = { userTextState.value = it },
         keyboardOptions = KeyboardOptions(
