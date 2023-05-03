@@ -1,9 +1,8 @@
 package com.example.playwithsap.Screen.login
 
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.playwithsap.domain.datastore.StoreSavedToken
 import com.example.playwithsap.domain.model.Login
 import com.example.playwithsap.domain.repository.LoginRepository
 import com.example.playwithsap.domain.util.MyResult
@@ -20,6 +19,7 @@ class LoginViewModel @Inject constructor(
 
     private val _loginState = MutableStateFlow<MyResult<Login>>(MyResult.Idel())
     val loginState: StateFlow<MyResult<Login>> = _loginState
+    val sharedPref = StoreSavedToken
     fun login() {
         viewModelScope.launch {
             _loginState.value = MyResult.Loading()
