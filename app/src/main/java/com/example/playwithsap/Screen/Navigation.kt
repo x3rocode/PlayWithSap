@@ -14,6 +14,8 @@ import com.example.playwithsap.Screen.empl.EmplInfoViewModel
 import com.example.playwithsap.Screen.empl.info.EmplInfoScreen
 import com.example.playwithsap.Screen.login.LoginScreen
 import com.example.playwithsap.Screen.login.LoginViewModel
+import com.example.playwithsap.Screen.search_table.TableScreen
+import com.example.playwithsap.Screen.search_table.TableViewModel
 import com.example.playwithsap.Screen.splash.SplashViewModel
 
 
@@ -22,13 +24,14 @@ import com.example.playwithsap.Screen.splash.SplashViewModel
 fun Navigation(
     splashViewModel: SplashViewModel = hiltViewModel(),
     loginViewModel: LoginViewModel = hiltViewModel(),
-    emplViewModel: EmplInfoViewModel = hiltViewModel()
+    emplViewModel: EmplInfoViewModel = hiltViewModel() ,
+    tableViewModel: TableViewModel = hiltViewModel()
 ){
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
-    NavHost(navController = navController, startDestination = "splash"){
+    NavHost(navController = navController, startDestination = "table"){
         composable("splash"){
             SplashScreen(
                 splashViewModel = splashViewModel,
@@ -41,7 +44,7 @@ fun Navigation(
             LoginScreen(
                 loginViewModel= loginViewModel,
                 onNavigateToEmplScreen = {
-                     navController.navigate("empl"){
+                     navController.navigate("table"){
                          navOptions {
                              anim {
                                  enter = popEnter
@@ -69,7 +72,22 @@ fun Navigation(
                 scaffoldState = scaffoldState
             )
         }
+        composable("table"){
+            TableScreen(
+                tableViewModel = tableViewModel,
+                onNavigateToTableScreen = {
+                    navController.navigate("login"){
+                        navOptions {
+                            anim {
 
+                            }
+                        }
+                    }
+                },
+                scope = scope,
+                scaffoldState = scaffoldState
+            )
+        }
 
     }
 }

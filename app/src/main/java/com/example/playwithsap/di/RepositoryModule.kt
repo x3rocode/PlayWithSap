@@ -3,9 +3,11 @@ package com.example.playwithsap.di
 
 import com.example.playwithsap.domain.repository.EmplRepository
 import com.example.playwithsap.domain.repository.LoginRepository
+import com.example.playwithsap.domain.repository.TableRepository
 import com.example.playwithsap.network.RetrofitApi
 import com.example.playwithsap.network.repository.EmplRepositoryImpl
 import com.example.playwithsap.network.repository.LoginRepositoryImpl
+import com.example.playwithsap.network.repository.TableRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,4 +25,8 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideLoginRepository(api: RetrofitApi): LoginRepository = LoginRepositoryImpl(api)
+
+    @Singleton
+    @Provides
+    fun provideTableRepository(api: RetrofitApi): TableRepository = TableRepositoryImpl(api)
 }
