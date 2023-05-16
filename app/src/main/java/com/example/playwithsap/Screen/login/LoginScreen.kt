@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.playwithsap.R
+import com.example.playwithsap.Screen.ui.theme.PoscoBlue
 import com.example.playwithsap.Screen.ui.theme.PoscoOG
 import com.example.playwithsap.Screen.ui.theme.Typography
 import com.example.playwithsap.domain.datastore.StoreSavedToken
@@ -53,7 +54,7 @@ fun LoginScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.White),
+            .background(color = PoscoBlue),
     ) {
         Background(Offset(0f, -700f))
         Logo()
