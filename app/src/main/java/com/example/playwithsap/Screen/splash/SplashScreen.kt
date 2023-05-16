@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.playwithsap.R
 import com.example.playwithsap.Screen.splash.SplashViewModel
+import com.example.playwithsap.Screen.ui.theme.PoscoBlue
 import com.example.playwithsap.Screen.ui.theme.PoscoOG
 import com.example.playwithsap.Screen.ui.theme.Typography
 import kotlinx.coroutines.delay
@@ -129,7 +130,7 @@ fun Background(position : Offset){
     Canvas(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.White)
+            .background(color = PoscoBlue)
             .graphicsLayer(
                 translationY = animateFloatAsState(
                     targetValue = position.y * 2f,

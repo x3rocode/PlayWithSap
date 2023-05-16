@@ -3,7 +3,6 @@ package com.example.playwithsap.Screen.login
 
 import Background
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -31,7 +30,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.playwithsap.R
-import com.example.playwithsap.Screen.ui.theme.PoscoBlue
 import com.example.playwithsap.Screen.ui.theme.PoscoOG
 import com.example.playwithsap.Screen.ui.theme.Typography
 import com.example.playwithsap.domain.datastore.StoreSavedToken
@@ -53,8 +51,7 @@ fun LoginScreen(
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .background(color = PoscoBlue),
+            .fillMaxSize(),
     ) {
         Background(Offset(0f, -700f))
         Logo()

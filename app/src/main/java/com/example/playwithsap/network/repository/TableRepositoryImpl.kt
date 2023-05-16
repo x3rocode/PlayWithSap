@@ -17,7 +17,9 @@ class TableRepositoryImpl constructor(
     override suspend fun get(): MyResult<List<TableDataDto>> {
 
         try {
+            Log.d("dddd", "Dddd");
             val response = api.getTableData(auth = sharedPref.getAuthToken(), tableName = "zaat0001")
+            Log.d("dddd", "Dddd");
             if(response.isSuccessful){
                 response.body()?.let {
                     Log.d("dddddddddddddddddddddd", it.toString())
@@ -27,6 +29,7 @@ class TableRepositoryImpl constructor(
             return MyResult.Error(response.message())
 
         }catch (e: Exception){
+            Log.d("dddd", e.message!!);
             return MyResult.Error(e.message!!)
         }
     }

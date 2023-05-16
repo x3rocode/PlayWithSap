@@ -31,7 +31,7 @@ fun Navigation(
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
-    NavHost(navController = navController, startDestination = "table"){
+    NavHost(navController = navController, startDestination = "login"){
         composable("splash"){
             SplashScreen(
                 splashViewModel = splashViewModel,
