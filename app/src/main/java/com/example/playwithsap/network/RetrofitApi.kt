@@ -2,7 +2,6 @@ package com.example.playwithsap.network
 
 import com.example.playwithsap.network.model.EmplDto
 import com.example.playwithsap.network.model.LoginDto
-import com.example.playwithsap.network.model.TableDataDto
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -31,5 +30,5 @@ interface RetrofitApi {
         @Header("Authorization") auth: String ,
         @Header("sap-client") client: Int = 400,
         @Path("tablename") tableName: String = ""
-    ): Response<List<TableDataDto>>
+    ): Response<String>
 }

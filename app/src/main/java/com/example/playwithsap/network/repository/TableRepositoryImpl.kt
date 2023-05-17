@@ -7,6 +7,8 @@ import com.example.playwithsap.domain.repository.TableRepository
 import com.example.playwithsap.domain.util.MyResult
 import com.example.playwithsap.network.RetrofitApi
 import com.example.playwithsap.network.model.TableDataDto
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class TableRepositoryImpl constructor(
     private val api: RetrofitApi,
@@ -19,11 +21,17 @@ class TableRepositoryImpl constructor(
         try {
             Log.d("dddd", "Dddd");
             val response = api.getTableData(auth = sharedPref.getAuthToken(), tableName = "zaat0001")
-            Log.d("dddd", "Dddd");
+            Log.d("dddd", "$response");
             if(response.isSuccessful){
-                response.body()?.let {
-                    Log.d("dddddddddddddddddddddd", it.toString())
-                    return MyResult.Success(it)
+                val gson = Gson()
+                val mapAdapter = gson.getAdapter(object: TypeToken<List<Map<String, Any?>>>() {})
+
+                response.body()?.let {jsonString ->
+                    val model: List<Map<String, Any?>> = mapAdapter.fromJson(jsonString)
+                    Log.d("modellllllllll",jsonString)
+                    Log.d("modellllllllll",model.toString())
+                    //Log.d("dddddddddddddddddddddd", it.toString())
+                    //return MyResult.Success(model)
                 }
             }
             return MyResult.Error(response.message())

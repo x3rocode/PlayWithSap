@@ -1,5 +1,6 @@
 package com.example.playwithsap.network.model
 
+import android.util.Log
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
@@ -32,6 +33,7 @@ object TableDataDtoSerializer : KSerializer<TableDataDto> {
         ?: throw SerializationException("Serializer for class $dataType is not registered in PacketSerializer")
 
     override fun serialize(encoder: Encoder, value: TableDataDto) {
+        Log.d("ddddddddd", "serial")
         encoder.encodeStructure(descriptor) {
             encodeStringElement(descriptor, 0, value.type)
             encodeSerializableElement(descriptor, 1, getPayloadSerializer(value.type), value.data)
@@ -40,6 +42,8 @@ object TableDataDtoSerializer : KSerializer<TableDataDto> {
 
     @ExperimentalSerializationApi
     override fun deserialize(decoder: Decoder): TableDataDto = decoder.decodeStructure(descriptor) {
+        Log.d("ddddddddd", "deseri")
+
         if (decodeSequentially()) {
             val type = decodeStringElement(descriptor, 0)
             val data = decodeSerializableElement(descriptor, 1, getPayloadSerializer(type))
@@ -55,4 +59,6 @@ object TableDataDtoSerializer : KSerializer<TableDataDto> {
             TableDataDto(type, data)
         }
     }
+
+
 }

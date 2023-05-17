@@ -1,5 +1,6 @@
 package com.example.playwithsap.network.repository
 
+import android.util.Log
 import com.example.playwithsap.domain.datastore.StoreSavedToken
 import com.example.playwithsap.domain.model.Login
 import com.example.playwithsap.domain.repository.LoginRepository
@@ -17,6 +18,8 @@ class LoginRepositoryImpl constructor(
 
         try {
             val response = api.login(auth = sharedPref.getAuthToken())
+
+            Log.d("dddd", "$response");
             if (response.isSuccessful) {
                 response.body()?.let {
 

@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import javax.inject.Singleton
 
 
@@ -25,8 +26,26 @@ object NetworkModule {
 
         return Retrofit.Builder()
             .baseUrl("http://dlvs4h01.poscointl.com:50000/")
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(RetrofitApi::class.java)
     }
+
+//    @Singleton
+//    @Provides
+//    fun provideStringRetrofitApi(): RetrofitApi {
+//
+//        val gson = GsonBuilder()
+//            .setLenient()
+//            .create()
+//
+//        return Retrofit.Builder()
+//            .baseUrl("http://dlvs4h01.poscointl.com:50000/")
+//            .addConverterFactory(ScalarsConverterFactory.create())
+//            .addConverterFactory(GsonConverterFactory.create(gson))
+//            .build()
+//            .create(RetrofitApi::class.java)
+//    }
 }
+
